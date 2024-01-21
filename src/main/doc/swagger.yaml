@@ -1,0 +1,252 @@
+openapi: 3.0.0
+info:
+  title: API - Orders Clean Project
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:3000'
+tags:
+  - name: User
+  - name: Product
+  - name: Order
+paths:
+  /api/user:
+    get:
+      tags:
+        - User
+      summary: GetAllUser
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: paginationLimit
+          in: query
+          schema:
+            type: integer
+          example: '1000'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/filters:
+    get:
+      tags:
+        - User
+      summary: getUserByFilters
+      parameters:
+        - name: cpf
+          in: query
+          schema:
+            type: integer
+          example: '33372047087'
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/user/1:
+    get:
+      tags:
+        - User
+      summary: getUserById
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/user/10:
+    delete:
+      tags:
+        - User
+      summary: deleteUser
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/product:
+    post:
+      tags:
+        - Product
+      summary: createProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Refrigerante
+                description: Refrigerante
+                price: 8
+                stock: 50
+                category: 3
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Product
+      summary: getAllProducts
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/product/3:
+    patch:
+      tags:
+        - Product
+      summary: pathProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Hamburguer
+                description: Hamburguer
+                category: 1
+                stock: 20
+                price: 30
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/product/2:
+    delete:
+      tags:
+        - Product
+      summary: deleteProduct
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/product/1:
+    get:
+      tags:
+        - Product
+      summary: getProductsById
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/product/filters:
+    get:
+      tags:
+        - Product
+      summary: getProductByFilter
+      parameters:
+        - name: category
+          in: query
+          schema:
+            type: integer
+          example: '2'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/order:
+    post:
+      tags:
+        - Order
+      summary: createOrder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                payment: 1
+                userId: 1
+                status: 1
+                note: Pedido de teste 2
+                orderProducts:
+                  - productId: 1
+                    quantity: 1
+                    price: 10
+                  - productId: 2
+                    quantity: 2
+                    price: 11
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Order
+      summary: getallOrders
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/order/50:
+    patch:
+      tags:
+        - Order
+      summary: pathOrder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                orderProducts:
+                  - productId: 3
+                    quantity: 1
+                    price: 8
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/order/35:
+    delete:
+      tags:
+        - Order
+      summary: deleteOrder
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/order/36:
+    get:
+      tags:
+        - Order
+      summary: getOrderById
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/order/filters:
+    get:
+      tags:
+        - Order
+      summary: getOrderByFilters
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: integer
+          example: '2'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
