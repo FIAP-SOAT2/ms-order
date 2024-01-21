@@ -1,4 +1,4 @@
-import { ForbiddenError } from "./ForbiddenError";
+import { ForbiddenError } from './ForbiddenError';
 
 describe('ForbiddenError', () => {
   it('should create an instance of ForbiddenError', () => {

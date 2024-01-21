@@ -45,5 +45,4 @@ describe('GetOrderByFilters', () => {
     expect(getOrderByFiltersRepository.getOrderByFilters).toHaveBeenCalledWith({ status });
     expect(result).toBeInstanceOf(OrderNotFoundError);
   });
-
 });

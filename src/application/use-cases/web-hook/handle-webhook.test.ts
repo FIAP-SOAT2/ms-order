@@ -42,5 +42,4 @@ describe('PaymentGateway', () => {
     expect(result.type).toBe('NOT_FOUND');
     expect(result.status).toBe(false);
   });
-
 });

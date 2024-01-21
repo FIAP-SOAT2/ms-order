@@ -36,18 +36,14 @@ describe('OrderProductsRepository', () => {
     expect(prisma.orderProduct.create).toHaveBeenCalledTimes(orderProductsData.length);
 
     orderProductsData.forEach((element, index) => {
-      expect(prisma.orderProduct.create).toHaveBeenNthCalledWith(
-        index + 1,
-        {
-          data: {
-            orderId: element.orderId,
-            productId: element.productId,
-            quantity: element.quantity,
-            price: element.price,
-          },
-        }
-      );
+      expect(prisma.orderProduct.create).toHaveBeenNthCalledWith(index + 1, {
+        data: {
+          orderId: element.orderId,
+          productId: element.productId,
+          quantity: element.quantity,
+          price: element.price,
+        },
+      });
     });
   });
-
 });

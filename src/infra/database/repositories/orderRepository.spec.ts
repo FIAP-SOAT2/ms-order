@@ -1,17 +1,17 @@
-import { PrismaClient, order_status_enum, order_payment_enum } from "@prisma/client";
-import { OrderRepository } from "./OrderRepository";
-import { UpdateOrderRepository } from "@application/interfaces/repositories/order/UpdateOrderRepository";
+import { PrismaClient, order_status_enum, order_payment_enum } from '@prisma/client';
+import { OrderRepository } from './OrderRepository';
+import { UpdateOrderRepository } from '@application/interfaces/repositories/order/UpdateOrderRepository';
 
 const prismaClient = new PrismaClient();
 
 const setupDb = async () => {
   const order = await prismaClient.order.create({
     data: {
-      status: "PENDING",
-      payment: "CREDITCARD",
+      status: 'PENDING',
+      payment: 'CREDITCARD',
       paid: true,
       paidId: 101522,
-      note: "note",
+      note: 'note',
       userId: 1,
     },
   });
@@ -27,11 +27,11 @@ describe('[Repository] Order', () => {
 
   it('should persist a new order', async () => {
     const order = {
-      status: "PENDING",
-      payment: "CREDITCARD",
+      status: 'PENDING',
+      payment: 'CREDITCARD',
       paid: true,
       paidId: 101522,
-      note: "note",
+      note: 'note',
       userId: 1,
     };
 
@@ -48,13 +48,13 @@ describe('[Repository] Order', () => {
     const updatedOrder: UpdateOrderRepository.Request = {
       orderId: order.id,
       orderData: {
-        status: "INPROGRESS",
-        payment: "CREDITCARD",
+        status: 'INPROGRESS',
+        payment: 'CREDITCARD',
         paid: true,
         paidId: 101522,
-        note: "note",
+        note: 'note',
         userId: 1,
-      }
+      },
     };
 
     await sut.updateOrder(updatedOrder);
@@ -64,23 +64,23 @@ describe('[Repository] Order', () => {
 
   it('should return an order', async () => {
     const order = await setupDb();
-  
+
     const persisted = await sut.getOrderById(order.id);
-  
+
     const expectedOrder = { ...order };
     delete expectedOrder.created_at;
     delete expectedOrder.updated_at;
-  
+
     expect(persisted).toMatchObject(expectedOrder);
   });
 
   it('should return all orders', async () => {
     await setupDb();
 
-   const params = {
+    const params = {
       page: 1,
       paginationLimit: 10,
-   };
+    };
 
     const persisted = await sut.getOrders(params);
 
@@ -107,5 +107,4 @@ describe('[Repository] Order', () => {
 
     expect(persisted).toBeNull();
   });
-
 });

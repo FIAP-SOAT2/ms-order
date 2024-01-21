@@ -13,29 +13,29 @@ describe('GetOrders', () => {
   });
 
   it('deve retornar a lista de pedidos paginada', async () => {
-    const fakeOrder1 =  {
-        id: 'sampleOrderId',
-        userId: 1,
-        note: 'Sample Note',
-        orderProducts: [],
-        payment: 'CREDITCARD',
-        status: 'PENDING',
-        paid: true,
-        paidId: 101522,
+    const fakeOrder1 = {
+      id: 'sampleOrderId',
+      userId: 1,
+      note: 'Sample Note',
+      orderProducts: [],
+      payment: 'CREDITCARD',
+      status: 'PENDING',
+      paid: true,
+      paidId: 101522,
     };
 
-    const fakeOrder2 =  {
-        id: 'sampleOrderId',
-        userId: 1,
-        note: 'Sample Note',
-        orderProducts: [],
-        payment: 'CREDITCARD',
-        status: 'PENDING',
-        paid: true,
-        paidId: 101522,
+    const fakeOrder2 = {
+      id: 'sampleOrderId',
+      userId: 1,
+      note: 'Sample Note',
+      orderProducts: [],
+      payment: 'CREDITCARD',
+      status: 'PENDING',
+      paid: true,
+      paidId: 101522,
     };
 
-    const fakeOrders = {data: [fakeOrder1, fakeOrder2], page: 1, total: 2, totalPages: 1};
+    const fakeOrders = { data: [fakeOrder1, fakeOrder2], page: 1, total: 2, totalPages: 1 };
 
     mockGetOrdersRepository.getOrders.mockResolvedValue(fakeOrders);
 
@@ -44,7 +44,7 @@ describe('GetOrders', () => {
 
     expect(mockGetOrdersRepository.getOrders).toHaveBeenCalledWith({
       page: 1,
-      paginationLimit: 10, 
+      paginationLimit: 10,
     });
   });
 

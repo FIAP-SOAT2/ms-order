@@ -23,11 +23,7 @@ describe('CreateOrder', () => {
       pay: jest.fn(),
     } as unknown as jest.Mocked<PaymentGateway>;
 
-    createOrder = new CreateOrder(
-      createOrderRepository,
-      createOrderProductsRepository,
-      paymentProcess,
-    );
+    createOrder = new CreateOrder(createOrderRepository, createOrderProductsRepository, paymentProcess);
   });
 
   it('should create an order successfully', async () => {
@@ -45,7 +41,7 @@ describe('CreateOrder', () => {
     const paymentResponse = {
       id: 123,
       status: true,
-      type: 'CREDIT_CARD'
+      type: 'CREDIT_CARD',
     };
 
     paymentProcess.pay.mockResolvedValue(paymentResponse);
@@ -84,5 +80,4 @@ describe('CreateOrder', () => {
       paymentStatus: paymentResponse.status,
     });
   });
-
 });

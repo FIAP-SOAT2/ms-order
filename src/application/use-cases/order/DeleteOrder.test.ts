@@ -20,5 +20,4 @@ describe('DeleteOrder', () => {
 
     expect(deleteOrderRepository.deleteOrder).toHaveBeenCalledWith(orderId);
   });
-
 });

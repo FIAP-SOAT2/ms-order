@@ -78,6 +78,5 @@ describe('UpdateOrder', () => {
     expect(result).toBeInstanceOf(OrderNotFoundError);
 
     expect(mockGetOrderByIdRepository.getOrderById).toHaveBeenCalledWith('sampleOrderId');
-
   });
 });
