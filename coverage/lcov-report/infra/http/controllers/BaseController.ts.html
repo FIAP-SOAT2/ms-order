@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for application/use-cases/order/UpdateOrder.ts</title>
+    <title>Code coverage report for infra/http/controllers/BaseController.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">application/use-cases/order</a> UpdateOrder.ts</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">infra/http/controllers</a> BaseController.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -84,49 +84,46 @@
 <a name='L19'></a><a href='#L19'>19</a>
 <a name='L20'></a><a href='#L20'>20</a>
 <a name='L21'></a><a href='#L21'>21</a>
-<a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L22'></a><a href='#L22'>22</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { GetOrderByIdRepository } from '../../../application/interfaces/repositories/order/GetOrderByIdRepository';
-import { UpdateOrderRepository } from '../../interfaces/repositories/order/UpdateOrderRepository';
-import { OrderNotFoundError } from '../../../application/errors/order/OrderNotFoundError';
-import { UpdateOrderInterface } from '@application/interfaces/use-cases/order/UpdateOrderInterface';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { HttpRequest } from '../../../infra/http/interfaces/HttpRequest';
+import { HttpResponse } from '../../../infra/http/interfaces/HttpResponse';
+import { Validation } from '../../../infra/http/interfaces/Validation';
+import { badRequest, serverError } from '../../../infra/http/helpers/http';
 &nbsp;
-export class UpdateOrder implements UpdateOrderInterface {
-  constructor(
-    private readonly getOrderByIdRepository: GetOrderByIdRepository,
-    private readonly updateOrderRepository: UpdateOrderRepository,
-  ) {}
+export abstract class BaseController {
+  constructor(private readonly validation?: Validation) {}
 &nbsp;
-  async execute(params: UpdateOrderInterface.Request): Promise&lt;UpdateOrderInterface.Response&gt; {
-    const { orderId, orderData } = params;
-    const order = await this.getOrderByIdRepository.getOrderById(orderId);
-&nbsp;
-    if (!order) {
-      return new OrderNotFoundError();
+  abstract execute(httpRequest: HttpRequest): Promise&lt;HttpResponse&gt;;
+  async handle(httpRequest: HttpRequest): Promise&lt;HttpResponse&gt; {
+    try {
+      const error = this.validation?.validate(httpRequest);
+      if (error) {
+        return badRequest(error);
+      }
+      return await this.execute(httpRequest);
+    } catch (error) {
+      return serverError(error);
     }
-&nbsp;
-    return this.updateOrderRepository.updateOrder({ orderId, orderData });
   }
 }
 &nbsp;</pre></td></tr></table></pre>

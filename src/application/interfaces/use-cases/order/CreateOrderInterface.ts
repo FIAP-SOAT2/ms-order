@@ -8,7 +8,7 @@ export interface CreateOrderInterface extends UseCase<CreateOrderInterface.Reque
 export namespace CreateOrderInterface {
   export type Request = Omit<OrderEntity, 'id' | 'created_at' | 'updated_at'>;
   export type Response = {
-    orderNumber: number;
+    orderNumber: string;
     paymentId: number;
     paymentStatus: boolean;
   };

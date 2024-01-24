@@ -2,7 +2,6 @@ import { CreateOrder } from './CreateOrder';
 import { CreateOrderRepository } from '@application/interfaces/repositories/order/CreateOrderRepository';
 import { CreateOrderProductsRepository } from '@application/interfaces/repositories/orderProducts/CreateOrderProductsRepository';
 import { PaymentGateway } from '../web-hook/handle-webhook';
-import { order_payment_enum } from '@prisma/client';
 
 describe('CreateOrder', () => {
   let createOrder: CreateOrder;
