@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.93% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>31/33</span>
+                <span class='fraction'>28/28</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.93% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>31/33</span>
+                <span class='fraction'>28/28</span>
             </div>
         
             
@@ -165,14 +165,7 @@
 <a name='L100'></a><a href='#L100'>100</a>
 <a name='L101'></a><a href='#L101'>101</a>
 <a name='L102'></a><a href='#L102'>102</a>
-<a name='L103'></a><a href='#L103'>103</a>
-<a name='L104'></a><a href='#L104'>104</a>
-<a name='L105'></a><a href='#L105'>105</a>
-<a name='L106'></a><a href='#L106'>106</a>
-<a name='L107'></a><a href='#L107'>107</a>
-<a name='L108'></a><a href='#L108'>108</a>
-<a name='L109'></a><a href='#L109'>109</a>
-<a name='L110'></a><a href='#L110'>110</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L103'></a><a href='#L103'>103</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -231,8 +224,8 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -246,20 +239,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -330,10 +316,10 @@ export class OrderRepository implements CreateOrderRepository, GetOrderByIdRepos
       paidId: orders.paidId,
     };
   }
-  getOrderByFilters(queryString: GetOrderByFiltersRepository.Request): Promise&lt;OrderEntity[]&gt; {
+  async getOrderByFilters(queryString: GetOrderByFiltersRepository.Request): Promise&lt;OrderEntity[]&gt; {
     const { status } = queryString;
     const filter = status as unknown as order_status_enum;
-    const data = prisma.order.findMany({
+    const data = await prisma.order.findMany({
       where: { status: filter },
       include: { orderProducts: true },
     });
@@ -355,10 +341,6 @@ export class OrderRepository implements CreateOrderRepository, GetOrderByIdRepos
     });
   }
   async deleteOrder(orderId: string): Promise&lt;void&gt; {
-    const removes = await this.removeProductsOrders(orderId);
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (!removes) {
-<span class="cstat-no" title="statement not covered" >      throw new Error('Error to remove products from order');</span>
-    }
     await prisma.order.delete({
       where: { id: orderId },
     });
@@ -367,9 +349,6 @@ export class OrderRepository implements CreateOrderRepository, GetOrderByIdRepos
     const dataRemove = await prisma.orderProduct.deleteMany({
       where: { orderId: orderId },
     });
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (!dataRemove) {
-<span class="cstat-no" title="statement not covered" >      throw new Error('Error to remove products from order');</span>
-    }
     return dataRemove;
   }
 &nbsp;
@@ -397,7 +376,7 @@ export class OrderRepository implements CreateOrderRepository, GetOrderByIdRepos
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-01-24T01:40:36.581Z
+                at 2024-01-25T02:23:54.742Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

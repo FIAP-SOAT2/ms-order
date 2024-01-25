@@ -8,8 +8,7 @@ export class GetOrderByFilters implements GetOrderByFiltersInterface {
   async execute(queryString: GetOrderByFiltersInterface.Request): Promise<GetOrderByFiltersInterface.Response> {
     const { status } = queryString;
     const order = await this.getOrderByFiltersRepository.getOrderByFilters({ status });
-
-    if (!order) {
+    if (!order || order.length === 0) {
       return new OrderNotFoundError();
     }
 

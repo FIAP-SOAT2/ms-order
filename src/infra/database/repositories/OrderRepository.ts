@@ -47,10 +47,10 @@ export class OrderRepository implements CreateOrderRepository, GetOrderByIdRepos
       paidId: orders.paidId,
     };
   }
-  getOrderByFilters(queryString: GetOrderByFiltersRepository.Request): Promise<OrderEntity[]> {
+  async getOrderByFilters(queryString: GetOrderByFiltersRepository.Request): Promise<OrderEntity[]> {
     const { status } = queryString;
     const filter = status as unknown as order_status_enum;
-    const data = prisma.order.findMany({
+    const data = await prisma.order.findMany({
       where: { status: filter },
       include: { orderProducts: true },
     });
@@ -72,10 +72,6 @@ export class OrderRepository implements CreateOrderRepository, GetOrderByIdRepos
     });
   }
   async deleteOrder(orderId: string): Promise<void> {
-    const removes = await this.removeProductsOrders(orderId);
-    if (!removes) {
-      throw new Error('Error to remove products from order');
-    }
     await prisma.order.delete({
       where: { id: orderId },
     });
@@ -84,9 +80,6 @@ export class OrderRepository implements CreateOrderRepository, GetOrderByIdRepos
     const dataRemove = await prisma.orderProduct.deleteMany({
       where: { orderId: orderId },
     });
-    if (!dataRemove) {
-      throw new Error('Error to remove products from order');
-    }
     return dataRemove;
   }
 

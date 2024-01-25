@@ -6,7 +6,7 @@ export class GetOrders implements GetOrdersInterface {
   constructor(private readonly getOrdersRepository: GetOrdersRepository) {}
 
   async execute(params: GetOrdersInterface.Request): Promise<GetOrdersInterface.Response> {
-    const { page = 1 } = params;
+    const { page } = params;
     const { paginationLimit } = paginationConfig;
     return this.getOrdersRepository.getOrders({
       page,

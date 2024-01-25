@@ -25,6 +25,6 @@ export class GetOrderByFiltersController extends BaseController {
 }
 
 export namespace GetOrderByFiltersController {
-  export type Request = HttpRequest<undefined, { email: string }>;
+  export type Request = HttpRequest<undefined, { status: string }>;
   export type Response = HttpResponse<GetOrderByFiltersInterface.Response>;
 }

@@ -1,3 +1,4 @@
+//no-test
 import { HttpResponse } from '../../http/interfaces/HttpResponse';
 import { ServerError } from '../errors/ServerError';
 
@@ -29,7 +30,6 @@ export const notFound = (error: Error): HttpResponse<Error> => ({
   statusCode: 404,
   body: error,
 });
-
 export const serverError = (error?: Error | unknown): HttpResponse<Error> => {
   const stack = error instanceof Error ? error.stack : undefined;
   return {

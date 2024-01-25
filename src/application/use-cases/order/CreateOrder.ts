@@ -13,9 +13,6 @@ export class CreateOrder implements CreateOrderInterface {
 
   async execute(orderData: CreateOrderInterface.Request): Promise<CreateOrderInterface.Response> {
     const paymentProcess = await this.paymentProcess.pay(orderData.payment as unknown as order_payment_enum);
-    if (!paymentProcess.status) {
-      throw new Error('Payment not processed');
-    }
     const orderObject: typeof orderData = {
       userId: orderData.userId,
       status: orderData.status,

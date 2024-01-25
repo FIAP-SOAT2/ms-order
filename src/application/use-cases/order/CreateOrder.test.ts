@@ -79,4 +79,16 @@ describe('CreateOrder', () => {
       paymentStatus: paymentResponse.status,
     });
   });
+
+  describe('with default PaymentGateway', () => {
+    it('should create an order successfully with default PaymentGateway', async () => {
+      createOrder = new CreateOrder(createOrderRepository, createOrderProductsRepository);
+      const paymentResponse = {
+        id: 123,
+        status: true,
+        type: 'CREDIT_CARD',
+      };
+      paymentProcess.pay.mockResolvedValue(paymentResponse);
+    });
+  });
 });

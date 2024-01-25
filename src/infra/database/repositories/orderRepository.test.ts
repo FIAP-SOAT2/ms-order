@@ -107,4 +107,32 @@ describe('[Repository] Order', () => {
 
     expect(persisted).toBeNull();
   });
+
+  it('should throw an error when trying to delete a non-existing order', async () => {
+    await expect(sut.deleteOrder('non-existing-id')).rejects.toThrow(Error);
+  });
+
+  it('should remove products from an order', async () => {
+    const order = await setupDb();
+    await sut.removeProductsOrders(order.id);
+    const products = await prismaClient.orderProduct.findMany({
+      where: { orderId: order.id },
+    });
+    expect(products).toHaveLength(0);
+  });
+
+  it('should throw an error when trying to update a non-existing order', async () => {
+    const updatedOrder: UpdateOrderRepository.Request = {
+      orderId: 'non-existing-id',
+      orderData: {
+        status: 'INPROGRESS',
+        payment: 'CREDITCARD',
+        paid: true,
+        paidId: 101522,
+        note: 'note',
+        userId: 1,
+      },
+    };
+    await expect(sut.updateOrder(updatedOrder)).rejects.toThrow(Error);
+  });
 });
