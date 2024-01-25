@@ -14,11 +14,11 @@ describe('GetOrderByIdController', () => {
   });
 
   it('deve retornar status 200 e o pedido quando encontrado', async () => {
-    const mockOrder = { id: 'ABC123', status: 'PENDING', userId: 1, note: 'Remover cebola'};
+    const mockOrder = { id: 'ABC123', status: 'PENDING', userId: 1, note: 'Remover cebola' };
     mockGetOrderById.execute.mockResolvedValue(mockOrder);
 
     const httpRequest = {
-      params: { id: 'ABC123' }
+      params: { id: 'ABC123' },
     };
 
     const response = await getOrderByIdController.execute(httpRequest);
@@ -31,7 +31,7 @@ describe('GetOrderByIdController', () => {
     mockGetOrderById.execute.mockResolvedValue(new OrderNotFoundError());
 
     const httpRequest = {
-      params: { id: '1' }
+      params: { id: '1' },
     };
 
     const response = await getOrderByIdController.execute(httpRequest);
@@ -39,5 +39,4 @@ describe('GetOrderByIdController', () => {
     expect(response.statusCode).toBe(404);
     expect(response.body).toBeInstanceOf(OrderNotFoundError);
   });
-
 });

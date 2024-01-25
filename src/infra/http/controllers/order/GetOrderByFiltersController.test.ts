@@ -12,19 +12,19 @@ describe('GetOrderByFiltersController', () => {
     };
     getOrderByFiltersController = new GetOrderByFiltersController(
       // assumindo que a validação sempre passa neste exemplo
-      { validate: jest.fn() }, 
-      mockGetOrderByFilters
+      { validate: jest.fn() },
+      mockGetOrderByFilters,
     );
   });
 
   it('deve retornar status 200 e os pedidos quando encontrados', async () => {
-    const mockOrders = [{ id: 'ABC123', status: 'PENDING', userId: 1, note: 'Remover cebola'}];
+    const mockOrders = [{ id: 'ABC123', status: 'PENDING', userId: 1, note: 'Remover cebola' }];
     mockGetOrderByFilters.execute.mockResolvedValue(mockOrders);
 
     const httpRequest = {
-      query: { status: 'PENDING' }
+      query: { status: 'PENDING' },
     };
-    
+
     const response = await getOrderByFiltersController.execute(httpRequest);
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual(mockOrders);
@@ -34,7 +34,7 @@ describe('GetOrderByFiltersController', () => {
     mockGetOrderByFilters.execute.mockResolvedValue(new OrderNotFoundError());
 
     const httpRequestErro = {
-      query: { status: 'READY' }
+      query: { status: 'READY' },
     };
     const response = await getOrderByFiltersController.execute(httpRequestErro);
     expect(response.statusCode).toBe(404);
