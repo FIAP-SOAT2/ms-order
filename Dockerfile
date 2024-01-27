@@ -9,10 +9,10 @@ RUN npm install
 COPY . .
 
 RUN npx prisma generate && \
-    npm run build && \
-    npm run copy-swagger
+    npx prisma db push && \
+    npm run build
 
-EXPOSE 3000
+EXPOSE 3020
 
 # Run
 CMD [ "npm", "run", "start" ]
