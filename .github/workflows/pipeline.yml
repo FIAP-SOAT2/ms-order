@@ -42,3 +42,5 @@ jobs:
         run: npm ci
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: quality
+        run: npm run test:ci
