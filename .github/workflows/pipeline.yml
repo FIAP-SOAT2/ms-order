@@ -14,8 +14,6 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  dockerfile_path: '../..'
-  CONTAINER_NAME: 'web'
 
 permissions:
   id-token: write
@@ -45,4 +43,36 @@ jobs:
       - name: Run tests
         run: npm run test:ci
         env:
-            DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      - name: Build Application
+        run: npm run build
+      - name: Set up Minikube
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y conntrack
+          minikube start --driver=docker
+      - name: Build Docker Image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/ms-order:latest .
+      - name: Push Docker Image to Docker Hub
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/ms-order:latest
+  cd:
+    name: Deploy to minikube
+    if: ${{ success() && github.event_name != 'pull_request' }}
+    needs: [ci]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Load Docker Image into Minikube
+        run: |
+          minikube cache add ${{ secrets.DOCKER_USERNAME }}/ms-order:$(date +'%Y%m%d%H%M%S')
+      - name: Apply Kubernetes Manifests
+        run: kubectl apply -f k8s/
+      - name: Expose Service in Minikube
+        run: kubectl expose deployment ms-order --type=NodePort --env=PORT=$(PORT)
+      - name: Show Minikube IP and Port
+        run: |
+          echo "Minikube IP: $(minikube ip)"
+          echo "Service Port: $(kubectl get svc ms-order -o jsonpath='{.spec.ports[0].nodePort}')"

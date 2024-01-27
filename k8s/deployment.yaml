@@ -1,0 +1,62 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: ms-order-autoscaler
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    apiVersion: apps/v1
+    name: ms-order
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 60
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-order
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-order
+  template:
+    metadata:
+      labels:
+        app: ms-order
+    spec:
+      containers:
+      - name: ms-order
+        image: anaccampos/ms-order:latest
+        ports:
+          - containerPort: 3020
+        resources:
+          limits:
+            cpu: 200m
+            memory: 500Mi
+          requests:
+            cpu: 100m
+            memory: 400Mi
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 3020
+          initialDelaySeconds: 300
+          periodSeconds: 60
+          timeoutSeconds: 20
+          failureThreshold: 3
+        envFrom:
+        - configMapRef:
+            name: ms-order-configmap
+        - secretRef:
+            name: ms-order-secret
+      imagePullSecrets:
+        - name: auth-docker
+      restartPolicy: Always

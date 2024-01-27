@@ -1,0 +1,8 @@
+kind: ConfigMap
+metadata:
+  name: ms-order-configmap
+  labels:
+    app: ms-order
+apiVersion: v1
+data:
+  PORT: "3020"
