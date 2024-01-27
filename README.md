@@ -1,20 +1,4 @@
-# Justificativa Para Utilização do Banco de Dados.
-A escolha do PostgreSQL para nossa aplicação pode ser justificada por várias razões:
-
-Desenvolvimento rápido e compatibilidade: Diversas bibliotecas e pacotes disponíveis que facilitam a integração entre aplicações NodeJs e o PostgreSQL.
-
-Desempenho e Escalabilidade: O PostgreSQL é conhecido por seu desempenho robusto, capacidade de escalabilidade e suporte a índices avançados. Facilitando otimizações de infra sem alteração de código.
-
-Maturidade: O PostgreSQL é um sistema de gerenciamento de banco de dados  de código aberto, altamente compatível com a linguagem SQL padrão e possui recursos avançados de um banco de dados relacional
-
-Comunidade Ativa: Possui comunidade de desenvolvedores ativa e é frequentemente atualizado, facilitando a resolução de bugs e eventuais dúvidas sobre o seu comportamento.
-
-Além disso, membros da equipe já tinham experiência com a sua utilização, o que favoreceu esse Banco de Dados dentre os demais.
-
-# Arquitetura do Banco de Dados
-![image](https://github.com/SOAT2/orders-project-clean-architecture/assets/54938008/b2608656-feef-4628-a66f-a51632b1f974)
-
-# ORDERS PROJECT
+# MS-ORDERS
 
 > Order management system for a snack bar.
 
@@ -102,6 +86,6 @@ The Main Layer is the entry point of the application. It contains the framework 
 
 - [TypeScript](https://www.typescriptlang.org/) - TypeScript is JavaScript with syntax for types.
 
-- [TypeOrm](https://typeorm.io/#/) - TypeOrm is a promise-based Node.js ORM for Postgres, MySQL, MariaDB, SQLite and Microsoft SQL Server.
+- [MongoDB]
 
-- [PostgreSQL](https://postgresql.org/) - PostgreSQL: The World's Most Advanced Open Source Relational Database
+- [PrismaORM]
