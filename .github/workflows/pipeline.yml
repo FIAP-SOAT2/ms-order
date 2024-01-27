@@ -27,9 +27,9 @@ jobs:
     runs-on: 'ubuntu-latest'
 
     steps:
-      - name: Set AWS credentials
+      - name: Set database url
         run: |
-          DATABASE_URL=${{ secrets.DATABASE_URL }}
+          export DATABASE_URL=${{ secrets.DATABASE_URL }}
       - name: Checkout
         uses: actions/checkout@v3.5.0
       - name: Setup Node
