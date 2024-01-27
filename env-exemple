@@ -1,0 +1,4 @@
+POSTGRES_HOST= "your_host_database"
+POSTGRES_PASSWORD: "your_password_database"
+POSTGRES_USER: "your_user_database"
+POSTGRES_DB: "your_database"

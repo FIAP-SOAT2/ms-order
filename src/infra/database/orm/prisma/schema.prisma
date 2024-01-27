@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum order_payment_enum {
+  CREDITCARD @map("0")
+  DEBITCARD @map("1")
+  MONEY @map("2")
+  PIX   @map("3")
+}
+
+enum order_status_enum {
+  READY @map("0")
+  INPROGRESS @map("1")
+  PENDING @map("2")
+  CANCELED @map("3")
+  DELIVERED @map("4")
+  PAYMENTFAIL @map("5")
+}
+
+model Order {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  status     order_status_enum  
+  payment    order_payment_enum
+  paid       Boolean  @default(false)
+  paidId     Float?
+  note       String?
+  userId     Int?
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  orderProducts OrderProduct[]
+}
+
+model OrderProduct {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  orderId   String?
+  quantity  Int?
+  price     Int?
+  productId Int?
+  order     Order?  @relation(fields: [orderId], references: [id])
+}
