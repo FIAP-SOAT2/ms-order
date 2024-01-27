@@ -8,9 +8,7 @@ RUN npm install
 
 COPY . .
 
-RUN npx prisma generate && \
-    npx prisma db push && \
-    npm run build
+RUN npm run build
 
 EXPOSE 3020
 
