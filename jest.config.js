@@ -14,5 +14,9 @@ module.exports = {
       tsconfig: 'tsconfig.json',
     },
   },
+  coverageReporters: [
+    "json",
+    "lcov",
+  ],
   // Outras configurações específicas do Jest, se necessário
 };
