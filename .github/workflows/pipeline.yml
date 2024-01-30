@@ -69,7 +69,7 @@ jobs:
         run: |
           minikube cache add ${{ secrets.DOCKER_USERNAME }}/ms-order:$(date +'%Y%m%d%H%M%S')
       - name: Apply Kubernetes Manifests
-        run: kubectl apply -f k8s/
+        run: kubectl apply -f ../k8s/
       - name: Expose Service in Minikube
         run: kubectl expose deployment ms-order --type=NodePort --env=PORT=$(PORT)
       - name: Show Minikube IP and Port

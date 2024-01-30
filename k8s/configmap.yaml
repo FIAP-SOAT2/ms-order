@@ -5,4 +5,4 @@ metadata:
     app: ms-order
 apiVersion: v1
 data:
-  PORT: "3020"
+  PORT: "4003"

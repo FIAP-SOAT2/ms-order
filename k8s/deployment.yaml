@@ -36,7 +36,7 @@ spec:
       - name: ms-order
         image: anaccampos/ms-order:latest
         ports:
-          - containerPort: 3020
+          - containerPort: 4003
         resources:
           limits:
             cpu: 200m
@@ -47,7 +47,7 @@ spec:
         livenessProbe:
           httpGet:
             path: /api/health
-            port: 3020
+            port: 4003
           initialDelaySeconds: 300
           periodSeconds: 60
           timeoutSeconds: 20
