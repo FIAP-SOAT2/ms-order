@@ -24,8 +24,8 @@ spec:
   type: LoadBalancer
   ports:
   - name: "http"
-    port: 3000
-    targetPort: 3000
+    port: 4003
+    targetPort: 4003
   externalIPs:
   - your-minikube-ip
   selector:
@@ -35,7 +35,7 @@ spec:
  Then you can deploy the application to the cluster:
 
 - `kubectl apply -f deploy/`: apply all configuration files from the deploy folder to the created cluster.
-- `kubectl port-forward <name-of-the-pod> 3000:3000`: run the application on your machine using the port 3000.
+- `kubectl port-forward <name-of-the-pod> 4003:4003`: run the application on your machine using the port 4003.
 
 ## Running the application directly on your local machine
 
@@ -52,7 +52,7 @@ Docker-compose is set to start an instance of Postgres and the entire applicatio
 - `npm run dev`: start the server in development mode.
 ## Swagger
 
-http://localhost:3000/docs/
+http://localhost:4003/docs/
 
 ## Local Access - Endpoints Collection
 

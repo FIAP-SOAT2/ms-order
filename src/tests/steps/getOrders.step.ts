@@ -8,11 +8,11 @@ let app, server;
 
 Given('initial all list order', async function () {
   app = await setupApp();
-  server = app.listen(3000);
+  server = app.listen(4003);
 });
 
 When('I make a request to {string}', async function (endpoint) {
-  response = await axios.get(`http://localhost:3000/api/order`);
+  response = await axios.get(`http://localhost:4003/api/order`);
 });
 
 Then('the result should return body success', function () {
