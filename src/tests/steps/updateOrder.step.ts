@@ -10,11 +10,11 @@ let app, server;
 
 Given('the order data is ready update', async function () {
   app = await setupApp();
-  server = app.listen(3000);
+  server = app.listen(4003);
 });
 
 When('I make a POST request to {string} with the order data for update', async function (endpoint) {
-  response = await axios.post(`http://localhost:3000/api/order`, OrderMockData, {
+  response = await axios.post(`http://localhost:4003/api/order`, OrderMockData, {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -34,7 +34,7 @@ Then('the response payment is true', function () {
 
 When('I update the order status to {string}', async function (status) {
   response = await axios.patch(
-    `http://localhost:3000/api/order/${createdOrderId}`,
+    `http://localhost:4003/api/order/${createdOrderId}`,
     {
       status: status,
     },
@@ -55,7 +55,7 @@ Then('the order status should be {string}', function (status) {
 });
 
 Then('delete created order', async function () {
-  response = await axios.delete(`http://localhost:3000/api/order/${createdOrderId}`);
+  response = await axios.delete(`http://localhost:4003/api/order/${createdOrderId}`);
   assert.equal(response.status, 204);
 });
 

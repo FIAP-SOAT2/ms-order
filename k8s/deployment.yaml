@@ -46,7 +46,7 @@ spec:
             memory: 400Mi
         livenessProbe:
           httpGet:
-            path: /api/health
+            path: /ms-order/health-check
             port: 4003
           initialDelaySeconds: 300
           periodSeconds: 60

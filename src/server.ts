@@ -3,7 +3,7 @@ import setupApp from './main/config/app';
 
 dotenv.config();
 
-const PORT = parseInt(`${process.env.PORT || 3000}`);
+const PORT = parseInt(`${process.env.PORT || 4003}`);
 
 const app = setupApp();
 app.listen(PORT, () => {

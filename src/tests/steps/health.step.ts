@@ -8,13 +8,13 @@ let response: any;
 let app, server;
 Given('the server is running', () => {
   app = setupApp();
-  server = app.listen(3000, () => {
-    console.log(`Server is running on port 3000`);
+  server = app.listen(4003, () => {
+    console.log(`Server is running on port 4003`);
   });
 });
 
 When('I make a GET request to {string}', async (endpoint: string) => {
-  const url = `http://localhost:3000${endpoint}`;
+  const url = `http://localhost:4003${endpoint}`;
   response = await axios.get(url);
 });
 
