@@ -3,5 +3,5 @@ export type HttpRequest<TBody = any, TParams = any, TQuery = any, THeaders = any
   query?: TQuery;
   params?: TParams;
   headers?: THeaders;
-  userId?: string;
+  userMail?: string;
 };

@@ -25,9 +25,10 @@ export default class AwsSns {
         const topicArn = process.env.TOPIC_CREATE_ORDER;
         const params = {
             Message: message,
-            TopicArn: topicArn
+            TopicArn: topicArn,
         };
         const data = await this.sns.publish(params).promise();
+        console.log(data)
         return data;
     }
 }

@@ -25,9 +25,7 @@ export default class AwsSQS {
           ReceiptHandle: receiptHandle,
         };
        const data = await this.sqs.deleteMessage(deleteParams).promise();
-       console.log('data', data);
        if (data){
-           console.log('Mensagem deletada');
        }
       }
 
@@ -35,14 +33,15 @@ export default class AwsSQS {
         const params = {
             QueueUrl: queueUrl,
             MaxNumberOfMessages: 10,
-            WaitTimeSeconds: 20
+            WaitTimeSeconds: 5,
         };
         const data = await this.sqs.receiveMessage(params).promise();
-        console.log('preview',data);
-        if (data.Messages.length > 0){
-        console.log('data aqui', data.Messages[0].Body);
-        await this.deleteMessage(data.Messages[0].ReceiptHandle);
+        console.log('data',data.Messages);
+        if (data.Messages.length === 0) {
+            console.log('No messages on queue')
+            return;
         }
+        await this.deleteMessage(data.Messages[0].ReceiptHandle);
         return data;
     }
 }

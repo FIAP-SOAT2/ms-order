@@ -31,7 +31,7 @@ model Order {
   paid       Boolean  @default(false)
   paidId     Float?
   note       String?
-  userId     Int?
+  userMail   String?
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
   orderProducts OrderProduct[]

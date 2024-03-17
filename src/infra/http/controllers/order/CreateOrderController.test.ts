@@ -20,7 +20,7 @@ describe('CreateOrderController', () => {
   it('deve retornar status 201 e o corpo da ordem ao criar com dados válidos', async () => {
     const mockHttpRequest = {
       body: {
-        userId: 1,
+        userMail: 'johnDoe@mail.com',
         note: 'Remover cebola',
         status: 'PENDING',
       },
@@ -44,7 +44,7 @@ describe('CreateOrderController', () => {
   it('deve retornar status 400 e mensagens de erro ao criar com dados inválidos', async () => {
     const mockHttpRequest = {
       body: {
-        userId: 1,
+        userMail: 'johnDoe@mail.com',
         note: 'Remover cebola',
         status: 'PENDING',
       },
@@ -61,7 +61,7 @@ describe('CreateOrderController', () => {
   it('deve lidar com erros lançados pela execução de createOrder', async () => {
     const mockHttpRequest = {
       body: {
-        userId: 1,
+        userMail: 'johnDoe@mail.com',
         note: 'Remover cebola',
         status: 'PENDING',
       },

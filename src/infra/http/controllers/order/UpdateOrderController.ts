@@ -18,7 +18,7 @@ export class UpdateOrderController extends BaseController {
 
   async execute(httpRequest: UpdateOrderController.Request): Promise<UpdateOrderController.Response> {
     const { id } = httpRequest.params!;
-    const { userId, status, payment, paid, paidId, note, orderProducts } = httpRequest.body;
+    const { userMail, status, payment, paid, paidId, note, orderProducts } = httpRequest.body;
 
     const orderOrError = await this.getOrderById.execute(id);
     if (orderOrError instanceof OrderNotFoundError) {
@@ -28,7 +28,7 @@ export class UpdateOrderController extends BaseController {
     const updatedOrderOrError = await this.updateOrder.execute({
       orderId: id,
       orderData: {
-        userId,
+        userMail,
         status,
         payment,
         paid,

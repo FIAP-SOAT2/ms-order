@@ -16,7 +16,7 @@ describe('GetOrderById', () => {
   it('deve retornar a ordem quando encontrada', async () => {
     const fakeOrder = {
       id: 'sampleOrderId',
-      userId: 1,
+      userMail: 'johnDoe@mail.com',
       note: 'Sample Note',
       orderProducts: [],
       payment: 'CREDITCARD',

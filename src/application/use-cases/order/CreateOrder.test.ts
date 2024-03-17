@@ -27,7 +27,7 @@ describe('CreateOrder', () => {
 
   it('should create an order successfully', async () => {
     const orderData = {
-      userId: 1,
+      userMail: 'johnDoe@mail.com',
       status: 'PENDING',
       payment: 'CREDITCARD',
       note: 'Sample Note',
@@ -52,7 +52,7 @@ describe('CreateOrder', () => {
 
     expect(paymentProcess.pay).toHaveBeenCalledWith(orderData.payment);
     expect(createOrderRepository.createOrder).toHaveBeenCalledWith({
-      userId: orderData.userId,
+      userMail: orderData.userMail,
       status: orderData.status,
       payment: orderData.payment,
       paid: paymentResponse.status,

@@ -18,21 +18,11 @@ export class CreateOrder implements CreateOrderInterface {
   }
 
   async execute(orderData: CreateOrderInterface.Request): Promise<CreateOrderInterface.Response> {
-    const paymentObject = {
-      userId: orderData.userId,
-      payment: orderData.payment,
-      paymentDescription: 'Payment for order',
-      paymentValue: orderData.orderProducts.reduceRight((acc: number, product: any) => {
-        return acc + product.price;
-      }, 0),
-    }
-    eventDispatcher.dispatch(events.order.insert, JSON.stringify(paymentObject));
     const orderObject: typeof orderData = {
-      userId: orderData.userId,
+      userMail: orderData.userMail,
       status: orderData.status,
       payment: orderData.payment,
       paid: true,
-      paidId: 123123,
       note: orderData.note,
       orderProducts: orderData.orderProducts,
     };
@@ -45,10 +35,22 @@ export class CreateOrder implements CreateOrderInterface {
       orderProduct.orderId = id;
     });
     await this.createOrdersProductsRepository.createOrderProducts(orderProducts);
+    await this.puslishPaymentOrder({id,...orderData});
     return {
       orderNumber: id,
-      paymentId: 123123,
       paymentStatus: true,
     };
+  }
+
+  private async puslishPaymentOrder(order){
+    const paymentObject = {
+      orderId: order.id,
+      userMail: order.userMail,
+      payment: order.payment.toLowerCase(),
+      paymentValue: order.orderProducts.reduceRight((acc: number, product: any) => {
+        return acc + (product.price * product.quantity);
+      }, 0),
+    }
+    eventDispatcher.dispatch(events.order.insert, JSON.stringify(paymentObject));
   }
 }

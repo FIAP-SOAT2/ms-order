@@ -1,6 +1,6 @@
 export const OrderMockData = {
   payment: 'CREDITCARD',
-  userId: 1,
+  userMail: 'johnDoe@mail.com',
   status: 'READY',
   note: 'Por favor remova as TOMATE',
   orderProducts: [

@@ -19,7 +19,7 @@ paths:
               type: object
               example:
                 payment: 1
-                userId: 1
+                userMail: 'johnDoe@mail.com'
                 status: 1
                 note: Pedido de teste 2
                 orderProducts:

@@ -22,7 +22,7 @@ describe('UpdateOrder', () => {
   it('deve atualizar a ordem quando encontrada', async () => {
     const fakeOrder = {
       id: 'sampleOrderId',
-      userId: 1,
+      userMail: 'johnDoe@mail.com',
       note: 'Sample Note',
       orderProducts: [],
       payment: 'CREDITCARD',
@@ -35,7 +35,7 @@ describe('UpdateOrder', () => {
 
     const updatedOrderData = {
       id: 'sampleOrderId',
-      userId: 1,
+      userMail: 'johnDoe@mail.com',
       note: 'Sample Note',
       orderProducts: [],
       payment: 'CREDITCARD',
@@ -65,7 +65,7 @@ describe('UpdateOrder', () => {
     const result = await updateOrderService.execute({
       orderId: 'sampleOrderId',
       orderData: {
-        userId: 1,
+        userMail: 'johnDoe@mail.com',
         note: 'Sample Note',
         orderProducts: [],
         payment: 'CREDITCARD',

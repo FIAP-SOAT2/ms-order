@@ -9,7 +9,6 @@ export namespace CreateOrderInterface {
   export type Request = Omit<OrderEntity, 'id' | 'created_at' | 'updated_at'>;
   export type Response = {
     orderNumber: string;
-    paymentId: number;
     paymentStatus: boolean;
   };
 }
