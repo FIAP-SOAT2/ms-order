@@ -3,6 +3,7 @@
 .env
 /src/infra/database/orm/prisma/migrations
 .idea
+/.idea
 
 
 # Coverage directory used by tools like istanbul

@@ -8,17 +8,13 @@ const queueUrl = process.env.PAYMENT_RESPONSE_QUEUE;
 
 export default class AwsSQS {
   private sqs: AWS.SQS;
+
   constructor(
     private readonly updateOrderRepository?: UpdateOrder,
     region?: string,
   ) {
     const options: AWS.SQS.ClientConfiguration = {
       region: region || defaultRegion,
-       endpoint: process.env.LOCALSTACK_URL || 'http://localhost:4566',
-       credentials: {
-       accessKeyId: 'dummy',
-       secretAccessKey: 'dummy',
-       }
     };
     const orderRepository = new OrderRepository();
     this.sqs = new AWS.SQS(options);

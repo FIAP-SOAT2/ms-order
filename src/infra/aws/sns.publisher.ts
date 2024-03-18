@@ -2,14 +2,9 @@ import { events } from '../../application/constants/constants';
 import { SNSClient, PublishCommand } from '@aws-sdk/client-sns';
 import { EventSubscriber, On } from 'event-dispatch';
 
-const snsClient = new SNSClient({ 
-  region: process.env.AWS_REGION ,
-  endpoint: process.env.LOCALSTACK_URL || 'http://localhost:4566',
-  credentials: {
-    accessKeyId: 'dummy',
-    secretAccessKey: 'dummy',
-}});
-
+const snsClient = new SNSClient({
+  region: process.env.AWS_REGION,
+});
 
 @EventSubscriber()
 export default class AwsSns {
@@ -33,6 +28,7 @@ export default class AwsSns {
       TopicArn: topicArn,
     });
     const response = await snsClient.send(publishCommand);
+    console.log(response);
     return response;
   }
 
