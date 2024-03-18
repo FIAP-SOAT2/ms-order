@@ -12,11 +12,11 @@ let app, server;
 
 Given('the order data is ready', async function () {
   app = await setupApp();
-  server = app.listen(4003);
+  server = app.listen(5001);
 });
 
 When('I make a POST request to {string} with the order data', async function (endpoint) {
-  response = await axios.post(`http://localhost:4003/api/order`, orderData, {
+  response = await axios.post(`http://localhost:5001/api/order`, orderData, {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -35,7 +35,7 @@ Then('the response response payment is true', function () {
 });
 
 Then('delete create order', async function () {
-  response = await axios.delete(`http://localhost:4003/api/order/${createdOrderId}`);
+  response = await axios.delete(`http://localhost:5001/api/order/${createdOrderId}`);
   assert.equal(response.status, 204);
 });
 

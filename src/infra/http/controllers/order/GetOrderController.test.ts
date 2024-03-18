@@ -13,7 +13,7 @@ describe('GetOrdersController', () => {
   });
 
   it('deve retornar status 200 e a lista de pedidos', async () => {
-    const dataorders = { id: 'ABC223', status: 'PENDING', userMail: 'johnDoe@mail.com', note: 'Remover cebola' };
+    const dataorders = { id: 'ABC223', status: 'PENDING', userMail: 'johnDoe@mail.com',userPhone:'12341561', note: 'Remover cebola' };
     mockGetOrders.execute.mockResolvedValue({ data: [dataorders], total: 1, page: 1, totalPages: 1 });
 
     const httpRequest = {

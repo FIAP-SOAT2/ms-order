@@ -21,6 +21,7 @@ describe('CreateOrderController', () => {
     const mockHttpRequest = {
       body: {
         userMail: 'johnDoe@mail.com',
+        userPhone: '1234567890',
         note: 'Remover cebola',
         status: 'PENDING',
       },
@@ -45,6 +46,7 @@ describe('CreateOrderController', () => {
     const mockHttpRequest = {
       body: {
         userMail: 'johnDoe@mail.com',
+        userPhone: '1234567890',
         note: 'Remover cebola',
         status: 'PENDING',
       },
@@ -62,6 +64,7 @@ describe('CreateOrderController', () => {
     const mockHttpRequest = {
       body: {
         userMail: 'johnDoe@mail.com',
+        userPhone: '1234567890',
         note: 'Remover cebola',
         status: 'PENDING',
       },

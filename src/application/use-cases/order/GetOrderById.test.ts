@@ -1,6 +1,6 @@
 import { GetOrderById } from './GetOrderById';
 import { OrderNotFoundError } from '../../errors/order/OrderNotFoundError';
-import { GetOrderByIdRepository } from '../../../application/interfaces/repositories/order/GetOrderByIdRepository';
+import { GetOrderByIdRepository } from '../../interfaces/repositories/order/GetOrderByIdRepository';
 
 const mockGetOrderByIdRepository: jest.Mocked<GetOrderByIdRepository> = {
   getOrderById: jest.fn(),
@@ -17,6 +17,7 @@ describe('GetOrderById', () => {
     const fakeOrder = {
       id: 'sampleOrderId',
       userMail: 'johnDoe@mail.com',
+      userPhone: '12301321',
       note: 'Sample Note',
       orderProducts: [],
       payment: 'CREDITCARD',

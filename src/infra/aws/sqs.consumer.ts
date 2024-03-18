@@ -15,11 +15,11 @@ export default class AwsSQS {
   ) {
     const options: AWS.SQS.ClientConfiguration = {
       region: region || defaultRegion,
-      // endpoint: process.env.LOCALSTACK_URL || 'http://localhost:4566',
-      // credentials: {
-      //     accessKeyId: 'dummy',
-      //     secretAccessKey: 'dummy',
-      // }
+       endpoint: process.env.LOCALSTACK_URL || 'http://localhost:4566',
+       credentials: {
+       accessKeyId: 'dummy',
+       secretAccessKey: 'dummy',
+       }
     };
     const orderRepository = new OrderRepository();
     this.sqs = new AWS.SQS(options);

@@ -24,6 +24,7 @@ describe('DeleteOrderController', () => {
     mockGetOrderById.execute.mockResolvedValue({
       id: 'valid-id',
       userMail: 'johnDoe@mail.com',
+      userPhone: '1234567890',
       note: 'Remover cebola',
       status: 'PENDING',
     });

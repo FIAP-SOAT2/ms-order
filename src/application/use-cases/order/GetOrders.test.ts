@@ -16,6 +16,7 @@ describe('GetOrders', () => {
     const fakeOrder1 = {
       id: 'sampleOrderId',
       userMail: 'johnDoe@mail.com',
+      userPhone: '12301321',
       note: 'Sample Note',
       orderProducts: [],
       payment: 'CREDITCARD',
@@ -27,6 +28,7 @@ describe('GetOrders', () => {
     const fakeOrder2 = {
       id: 'sampleOrderId',
       userMail: 'johnDoe@mail.com',
+      userPhone: '12301321',
       note: 'Sample Note',
       orderProducts: [],
       payment: 'CREDITCARD',

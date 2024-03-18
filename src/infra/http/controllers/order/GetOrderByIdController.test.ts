@@ -14,7 +14,7 @@ describe('GetOrderByIdController', () => {
   });
 
   it('deve retornar status 200 e o pedido quando encontrado', async () => {
-    const mockOrder = { id: 'ABC123', status: 'PENDING', userMail: 'johnDoe@mail.com', note: 'Remover cebola' };
+    const mockOrder = { id: 'ABC123', status: 'PENDING', userMail: 'johnDoe@mail.com',userPhone: '12345678', note: 'Remover cebola' };
     mockGetOrderById.execute.mockResolvedValue(mockOrder);
 
     const httpRequest = {

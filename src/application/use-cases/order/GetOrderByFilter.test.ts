@@ -20,6 +20,7 @@ describe('GetOrderByFilters', () => {
     const expectedOrder: OrderEntity = {
       id: 'sampleOrderId',
       userMail: 'johnDoe@mail.com',
+      userPhone: '12301321',
       note: 'Sample Note',
       orderProducts: [],
       payment: 'CREDITCARD',

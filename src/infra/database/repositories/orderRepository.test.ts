@@ -33,6 +33,7 @@ describe('[Repository] Order', () => {
       paidId: 101522,
       note: 'note',
       userMail: 'johnDoe@mail.com',
+      userPhone: '1234567890',
     };
 
     await sut.createOrder(order);
