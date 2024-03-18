@@ -3,7 +3,7 @@ import { CreateOrderRepository } from '@application/interfaces/repositories/orde
 import { CreateOrderProductsRepository } from '@application/interfaces/repositories/orderProducts/CreateOrderProductsRepository';
 import { IAwsSns } from '@infra/aws/interface/publish.inteface';
 import AwsSns from '../../../infra/aws/sns.publisher';
-import { EventDispatcher } from "event-dispatch";
+import { EventDispatcher } from 'event-dispatch';
 import { events } from '../../constants/constants';
 
 const eventDispatcher = new EventDispatcher();
@@ -36,22 +36,22 @@ export class CreateOrder implements CreateOrderInterface {
       orderProduct.orderId = id;
     });
     await this.createOrdersProductsRepository.createOrderProducts(orderProducts);
-    await this.puslishPaymentOrder({id,...orderData});
+    await this.puslishPaymentOrder({ id, ...orderData });
     return {
       orderNumber: id,
       paymentStatus: true,
     };
   }
 
-  private async puslishPaymentOrder(order){
+  private async puslishPaymentOrder(order) {
     const paymentObject = {
       orderId: order.id,
       userMail: order.userMail,
       payment: order.payment.toLowerCase(),
       paymentValue: order.orderProducts.reduceRight((acc: number, product: any) => {
-        return acc + (product.price * product.quantity);
+        return acc + product.price * product.quantity;
       }, 0),
-    }
+    };
     eventDispatcher.dispatch(events.order.insert, JSON.stringify(paymentObject));
   }
 }

@@ -8,11 +8,9 @@ import { DeleteOrderRepository } from '../../../application/interfaces/repositor
 import { prisma } from '../orm/prisma';
 import { order_payment_enum, order_status_enum } from '@prisma/client';
 
-
-
 export class OrderRepository implements CreateOrderRepository, GetOrderByIdRepository, GetOrderByFiltersRepository, UpdateOrderRepository, DeleteOrderRepository, GetOrdersRepository {
   async createOrder(orderData: CreateOrderRepository.Request): Promise<any> {
-    const { userMail, note } = orderData;
+    const { userMail, userPhone, note } = orderData;
     const status = orderData.status as unknown as order_status_enum;
     const payment = orderData.payment as unknown as order_payment_enum;
     const creating = await prisma.order.create({
@@ -23,6 +21,7 @@ export class OrderRepository implements CreateOrderRepository, GetOrderByIdRepos
         paidId: 101522,
         note,
         userMail,
+        userPhone,
       },
     });
     const id = creating.id;
@@ -42,6 +41,7 @@ export class OrderRepository implements CreateOrderRepository, GetOrderByIdRepos
     return {
       id: orders.id,
       userMail: orders.userMail,
+      userPhone: orders.userPhone,
       note: orders.note,
       orderProducts: orderProducts,
       payment: orders.payment,

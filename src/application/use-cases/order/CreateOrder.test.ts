@@ -18,7 +18,6 @@ describe('CreateOrder', () => {
       createOrderProducts: jest.fn(),
     } as jest.Mocked<CreateOrderProductsRepository>;
 
-
     createOrder = new CreateOrder(createOrderRepository, createOrderProductsRepository);
   });
 

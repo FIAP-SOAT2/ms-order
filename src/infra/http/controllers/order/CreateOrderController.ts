@@ -13,8 +13,17 @@ export class CreateOrderController extends BaseController {
   }
 
   async execute(httpRequest: CreateOrderController.Request): Promise<CreateOrderController.Response> {
-    const { userMail, status, payment, paid, paidId, note, orderProducts } = httpRequest.body;
-    const order = await this.createOrder.execute({ userMail, status, payment, paid, paidId, note, orderProducts });
+    const { userMail, userPhone, status, payment, paid, paidId, note, orderProducts } = httpRequest.body;
+    const order = await this.createOrder.execute({
+      userMail,
+      userPhone,
+      status,
+      payment,
+      paid,
+      paidId,
+      note,
+      orderProducts,
+    });
     if (!order) {
       return {
         statusCode: 400,

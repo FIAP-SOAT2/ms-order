@@ -4,8 +4,8 @@ import { OrderNotFoundError } from '../../../application/errors/order/OrderNotFo
 import { UpdateOrderInterface } from '@application/interfaces/use-cases/order/UpdateOrderInterface';
 import eventDispatcher, { EventSubscriber, On } from 'event-dispatch';
 import { events } from '../../constants/constants';
-import { IAwsSns } from '@infra/aws/interface/publish.inteface';
-import AwsSns from '@infra/aws/sns.publisher';
+import { IAwsSns } from '../../../infra/aws/interface/publish.inteface';
+import AwsSns from '../../../infra/aws/sns.publisher';
 
 @EventSubscriber()
 export class UpdateOrder implements UpdateOrderInterface {
@@ -26,21 +26,25 @@ export class UpdateOrder implements UpdateOrderInterface {
       return new OrderNotFoundError();
     }
 
-    if (orderData.paidId){
+    if (orderData.paidId) {
       await this.puslishNotificarionStatus({
         userPhone: order.userPhone,
         status: orderData.paid,
       });
     }
 
+    if (!orderData.paid) {
+      orderData.status = 'PAYMENTFAIL';
+    }
+
     return this.updateOrderRepository.updateOrder({ orderId, orderData });
   }
 
-  private async puslishNotificarionStatus(order){
+  private async puslishNotificarionStatus(order) {
     const paymentObject = {
       phoneNumber: order.userPhone,
-      message: order.status === true ? "Seu pedido está sendo preparado" : "Tivemos um problema com o pagamento, por favor verifique!",
-    }
-    eventDispatcher.dispatch(events.order.insert, JSON.stringify(paymentObject));
+      message: order.status === true ? 'Seu pedido está sendo preparado' : 'Tivemos um problema com o pagamento, por favor verifique!',
+    };
+    eventDispatcher.dispatch(events.order.status, paymentObject);
   }
 }

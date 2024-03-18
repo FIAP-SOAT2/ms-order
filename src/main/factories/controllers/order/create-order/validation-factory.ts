@@ -10,14 +10,7 @@ export const makeCreateOrderValidation = (): ValidationComposite => {
   const enumValidator = new EnumValidatorAdapter();
 
   return new ValidationComposite(
-    [
-      new RequiredFieldValidation('userMail'),
-      new RequiredFieldValidation('payment'),
-      new EnumFieldValidation('payment', enumValidator, PaymentEnum),
-      new RequiredFieldValidation('orderProducts'),
-      new RequiredFieldValidation('note'),
-      new EnumFieldValidation('status', enumValidator, StatusEnum),
-    ],
+    [new RequiredFieldValidation('userMail'), new RequiredFieldValidation('payment'), new EnumFieldValidation('payment', enumValidator, PaymentEnum), new RequiredFieldValidation('orderProducts'), new RequiredFieldValidation('note'), new EnumFieldValidation('status', enumValidator, StatusEnum)],
     'body',
   );
 };

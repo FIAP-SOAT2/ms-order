@@ -16,9 +16,9 @@ async function startSQSConsumer() {
     console.error('Failed to consume from SQS:', error);
   }
 }
-setInterval(startSQSConsumer, 5000);
+setInterval(startSQSConsumer, 10000);
 
 app.listen(PORT, () => {
+  startSQSConsumer();
   console.log(`Server is running on port ${PORT}`);
-  
 });
