@@ -12,8 +12,7 @@
     "build:watch": "npm run build -- --watch",
     "start": "node dist/server.js",
     "dev": "nodemon --watch 'src/' --exec 'ts-node src/server.ts' -e ts",
-    "start:dev": "npm run build:watch\" \"npm run dev\"",
-    "start:dev:win": "npx nodemon src/server.ts",
+    "start:dev": "npx nodemon src/server.ts",
     "test:ci": "npm run test:unit -- --silent --coverage",
     "test:unit": "jest",
     "test-bdd": "cucumber-js test --format summary",
@@ -54,6 +53,7 @@
     "@main": "dist/main"
   },
   "dependencies": {
+    "@aws-sdk/client-sns": "^3.535.0",
     "@commitlint/cli": "^18.2.0",
     "@commitlint/config-conventional": "^18.1.0",
     "@cucumber/cucumber": "^10.3.1",

@@ -4,6 +4,7 @@ import { order_payment_enum, order_status_enum } from '@prisma/client';
 export class IOrderDomain {
   id: string;
   userMail: string;
+  userPhone: string;
   note: string;
   orderProducts?: OrderProductsEntity[];
   payment?: order_payment_enum | string;
@@ -15,6 +16,7 @@ export class IOrderDomain {
 export class OrderEntity implements IOrderDomain {
   id: string;
   userMail: string;
+  userPhone: string;
   note: string;
   orderProducts?: OrderProductsEntity[];
   payment?: order_payment_enum | string;
@@ -25,6 +27,7 @@ export class OrderEntity implements IOrderDomain {
   constructor(props: IOrderDomain) {
     this.id = props.id;
     this.userMail = props.userMail;
+    this.userPhone = props.userPhone;
     this.note = props.note;
     this.orderProducts = props.orderProducts;
     this.payment = props.payment;

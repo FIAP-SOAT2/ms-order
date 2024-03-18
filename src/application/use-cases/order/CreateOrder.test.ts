@@ -18,16 +18,14 @@ describe('CreateOrder', () => {
       createOrderProducts: jest.fn(),
     } as jest.Mocked<CreateOrderProductsRepository>;
 
-    paymentProcess = {
-      pay: jest.fn(),
-    } as unknown as jest.Mocked<PaymentGateway>;
 
-    createOrder = new CreateOrder(createOrderRepository, createOrderProductsRepository, paymentProcess);
+    createOrder = new CreateOrder(createOrderRepository, createOrderProductsRepository);
   });
 
   it('should create an order successfully', async () => {
     const orderData = {
       userMail: 'johnDoe@mail.com',
+      userPhone: '1234567890',
       status: 'PENDING',
       payment: 'CREDITCARD',
       note: 'Sample Note',

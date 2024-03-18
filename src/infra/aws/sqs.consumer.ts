@@ -1,12 +1,16 @@
+import { UpdateOrderInterface } from "../../application/interfaces/use-cases/order/UpdateOrderInterface";
+import { UpdateOrder } from "../../application/use-cases/order/UpdateOrder";
+import { OrderRepository } from "../../infra/database/repositories/OrderRepository";
 import AWS from "aws-sdk";
 
 const defaultRegion = process.env.AWS_REGION || 'eu-central-1';
-const queueUrl = 'http://sqs.eu-central-1.localhost.localstack.cloud:4566/000000000000/dummy-queue2';
+const queueUrl = process.env.PAYMENT_RESPONSE_QUEUE;
 
 export default class AwsSQS {
-    private sqs: AWS.SQS;
-
-    constructor(region?: string) {
+    private  sqs: AWS.SQS;
+    constructor(
+        private readonly updateOrderRepository?: UpdateOrder,
+        region?: string) {
         const options: AWS.SQS.ClientConfiguration = {
             region: region || defaultRegion,
             endpoint: process.env.LOCALSTACK_URL || 'http://localhost:4566',
@@ -15,8 +19,12 @@ export default class AwsSQS {
                 secretAccessKey: 'dummy',
             }
         };
-
+        const orderRepository = new OrderRepository();
         this.sqs = new AWS.SQS(options);
+        this.updateOrderRepository = new UpdateOrder(
+            orderRepository,
+            orderRepository
+        );
     }
 
     async deleteMessage(receiptHandle) {
@@ -24,9 +32,7 @@ export default class AwsSQS {
           QueueUrl: queueUrl,
           ReceiptHandle: receiptHandle,
         };
-       const data = await this.sqs.deleteMessage(deleteParams).promise();
-       if (data){
-       }
+       await this.sqs.deleteMessage(deleteParams).promise();
       }
 
     public async consumeFromQueue(): Promise<any> {
@@ -36,11 +42,20 @@ export default class AwsSQS {
             WaitTimeSeconds: 5,
         };
         const data = await this.sqs.receiveMessage(params).promise();
-        console.log('data',data.Messages);
         if (data.Messages.length === 0) {
             console.log('No messages on queue')
             return;
         }
+        const paymentStatus = JSON.parse(JSON.parse(data.Messages[0].Body).Message);
+        const updateObject : UpdateOrderInterface.Request = {
+            orderId: paymentStatus.orderId,
+            orderData: {
+                paid: paymentStatus.status,
+                paidId: paymentStatus.id,
+                status: paymentStatus.status === true ? "READY" : "PAYMENT_FAILED"
+            }
+        }
+        await this.updateOrderRepository.execute(updateObject);
         await this.deleteMessage(data.Messages[0].ReceiptHandle);
         return data;
     }

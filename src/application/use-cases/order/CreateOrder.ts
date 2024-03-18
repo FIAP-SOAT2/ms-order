@@ -12,7 +12,7 @@ export class CreateOrder implements CreateOrderInterface {
   constructor(
     private readonly createOrderRepository: CreateOrderRepository,
     private readonly createOrdersProductsRepository: CreateOrderProductsRepository,
-    private AwsSnsService: IAwsSns,
+    private AwsSnsService?: IAwsSns,
   ) {
     this.AwsSnsService = new AwsSns();
   }
@@ -20,6 +20,7 @@ export class CreateOrder implements CreateOrderInterface {
   async execute(orderData: CreateOrderInterface.Request): Promise<CreateOrderInterface.Response> {
     const orderObject: typeof orderData = {
       userMail: orderData.userMail,
+      userPhone: orderData.userPhone,
       status: orderData.status,
       payment: orderData.payment,
       paid: true,

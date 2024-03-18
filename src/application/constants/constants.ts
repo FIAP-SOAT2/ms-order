@@ -3,5 +3,6 @@ export const events = {
         insert: 'order.insert',
         update: 'order.update',
         remove: 'order.remove',
+        status: 'order.status',
     }
 };
