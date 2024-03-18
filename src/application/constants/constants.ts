@@ -4,5 +4,6 @@ export const events = {
     update: 'order.update',
     remove: 'order.remove',
     status: 'order.status',
+    stock: 'order.stock',
   },
 };

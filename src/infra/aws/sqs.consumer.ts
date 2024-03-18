@@ -3,12 +3,11 @@ import { UpdateOrder } from '../../application/use-cases/order/UpdateOrder';
 import { OrderRepository } from '../../infra/database/repositories/OrderRepository';
 import AWS from 'aws-sdk';
 
-const defaultRegion = process.env.AWS_REGION || 'us-east-1';
+const defaultRegion = process.env.AWS_REGION;
 const queueUrl = process.env.PAYMENT_RESPONSE_QUEUE;
 
 export default class AwsSQS {
   private sqs: AWS.SQS;
-
   constructor(
     private readonly updateOrderRepository?: UpdateOrder,
     region?: string,

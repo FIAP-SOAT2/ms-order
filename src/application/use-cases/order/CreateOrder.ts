@@ -35,6 +35,7 @@ export class CreateOrder implements CreateOrderInterface {
     orderProducts.forEach((orderProduct: any) => {
       orderProduct.orderId = id;
     });
+    eventDispatcher.dispatch(events.order.stock, JSON.stringify(orderProducts));
     await this.createOrdersProductsRepository.createOrderProducts(orderProducts);
     await this.puslishPaymentOrder({ id, ...orderData });
     return {

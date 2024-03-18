@@ -1,15 +1,33 @@
 import { events } from '../../application/constants/constants';
 import { SNSClient, PublishCommand } from '@aws-sdk/client-sns';
-
 import { EventSubscriber, On } from 'event-dispatch';
 
-const snsClient = new SNSClient({ region: 'us-east-1' });
+const snsClient = new SNSClient({ 
+  region: process.env.AWS_REGION ,
+  endpoint: process.env.LOCALSTACK_URL || 'http://localhost:4566',
+  credentials: {
+    accessKeyId: 'dummy',
+    secretAccessKey: 'dummy',
+}});
+
 
 @EventSubscriber()
 export default class AwsSns {
+
   @On(`${events.order.insert}`)
   public async PublishToTopic(message: string): Promise<any> {
     const topicArn = process.env.TOPIC_CREATE_ORDER;
+    const publishCommand = new PublishCommand({
+      Message: message,
+      TopicArn: topicArn,
+    });
+    const response = await snsClient.send(publishCommand);
+    return response;
+  }
+
+  @On(`${events.order.stock}`)
+  public async PublishStockToTopic(message: string): Promise<any> {
+    const topicArn = process.env.TOPIC_ORDER_STOCK_RESERVATION;
     const publishCommand = new PublishCommand({
       Message: message,
       TopicArn: topicArn,
