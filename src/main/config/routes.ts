@@ -10,8 +10,6 @@ export default (app: Express): void => {
   healthyRouter(router);
   orderRouter(router);
   app.use((_req, res) => {
-    res.set('Content-Security-Policy', "default-src 'self'")
-        .status(404)
-        .send('Resource not found');
-});
+    res.set('Content-Security-Policy', "default-src 'self'").status(404).send('Resource not found');
+  });
 };
