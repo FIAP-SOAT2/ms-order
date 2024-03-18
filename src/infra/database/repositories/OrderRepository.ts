@@ -7,9 +7,10 @@ import { UpdateOrderRepository } from '../../../application/interfaces/repositor
 import { DeleteOrderRepository } from '../../../application/interfaces/repositories/order/DeleteOrderRepository';
 import { prisma } from '../orm/prisma';
 import { order_payment_enum, order_status_enum } from '@prisma/client';
+
 export class OrderRepository implements CreateOrderRepository, GetOrderByIdRepository, GetOrderByFiltersRepository, UpdateOrderRepository, DeleteOrderRepository, GetOrdersRepository {
   async createOrder(orderData: CreateOrderRepository.Request): Promise<any> {
-    const { userId, note } = orderData;
+    const { userMail, userPhone, note } = orderData;
     const status = orderData.status as unknown as order_status_enum;
     const payment = orderData.payment as unknown as order_payment_enum;
     const creating = await prisma.order.create({
@@ -19,7 +20,8 @@ export class OrderRepository implements CreateOrderRepository, GetOrderByIdRepos
         paid: true,
         paidId: 101522,
         note,
-        userId,
+        userMail,
+        userPhone,
       },
     });
     const id = creating.id;
@@ -38,7 +40,8 @@ export class OrderRepository implements CreateOrderRepository, GetOrderByIdRepos
     const orders = { ...data, orderProducts };
     return {
       id: orders.id,
-      userId: orders.userId,
+      userMail: orders.userMail,
+      userPhone: orders.userPhone,
       note: orders.note,
       orderProducts: orderProducts,
       payment: orders.payment,
@@ -61,7 +64,7 @@ export class OrderRepository implements CreateOrderRepository, GetOrderByIdRepos
     return prisma.order.update({
       where: { id: orderId },
       data: {
-        userId: orderData.userId,
+        userMail: orderData.userMail,
         note: orderData.note,
         orderProducts: orderData.orderProducts as unknown as any,
         payment: orderData.payment as unknown as order_payment_enum,

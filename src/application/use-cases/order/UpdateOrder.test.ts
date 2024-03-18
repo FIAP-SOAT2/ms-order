@@ -1,41 +1,34 @@
 import { UpdateOrder } from './UpdateOrder';
 import { GetOrderByIdRepository } from '../../../application/interfaces/repositories/order/GetOrderByIdRepository';
-import { UpdateOrderRepository } from '../../interfaces/repositories/order/UpdateOrderRepository';
+import { UpdateOrderRepository } from '../../../application/interfaces/repositories/order/UpdateOrderRepository';
 import { OrderNotFoundError } from '../../../application/errors/order/OrderNotFoundError';
+import eventDispatcher from 'event-dispatch';
+import { IAwsSns } from '../../../infra/aws/interface/publish.inteface';
 
+jest.mock('event-dispatch');
 const mockGetOrderByIdRepository: jest.Mocked<GetOrderByIdRepository> = {
   getOrderById: jest.fn(),
 };
-
 const mockUpdateOrderRepository: jest.Mocked<UpdateOrderRepository> = {
   updateOrder: jest.fn(),
+};
+const mockAwsSnsService: jest.Mocked<IAwsSns> = {
+  PublishToTopic: jest.fn(),
 };
 
 describe('UpdateOrder', () => {
   let updateOrderService: UpdateOrder;
 
   beforeEach(() => {
-    updateOrderService = new UpdateOrder(mockGetOrderByIdRepository, mockUpdateOrderRepository);
+    updateOrderService = new UpdateOrder(mockUpdateOrderRepository, mockGetOrderByIdRepository, mockAwsSnsService);
     jest.clearAllMocks();
   });
 
-  it('deve atualizar a ordem quando encontrada', async () => {
+  it('deve atualizar a ordem quando encontrada e publicar notificação se paidId é fornecido', async () => {
     const fakeOrder = {
       id: 'sampleOrderId',
-      userId: 1,
-      note: 'Sample Note',
-      orderProducts: [],
-      payment: 'CREDITCARD',
-      status: 'PENDING',
-      paid: true,
-      paidId: 101522,
-    };
-
-    mockGetOrderByIdRepository.getOrderById.mockResolvedValue(fakeOrder);
-
-    const updatedOrderData = {
-      id: 'sampleOrderId',
-      userId: 1,
+      userMail: 'johnDoe@mail.com',
+      userPhone: '12301321',
       note: 'Sample Note',
       orderProducts: [],
       payment: 'CREDITCARD',
@@ -43,6 +36,9 @@ describe('UpdateOrder', () => {
       paid: true,
       paidId: 101522,
     };
+    const updatedOrderData = { ...fakeOrder, status: 'INPROGRESS' };
+
+    mockGetOrderByIdRepository.getOrderById.mockResolvedValue(fakeOrder);
     mockUpdateOrderRepository.updateOrder.mockResolvedValue(updatedOrderData);
 
     const result = await updateOrderService.execute({
@@ -51,12 +47,12 @@ describe('UpdateOrder', () => {
     });
 
     expect(result).toEqual(updatedOrderData);
-
     expect(mockGetOrderByIdRepository.getOrderById).toHaveBeenCalledWith('sampleOrderId');
     expect(mockUpdateOrderRepository.updateOrder).toHaveBeenCalledWith({
       orderId: 'sampleOrderId',
       orderData: updatedOrderData,
     });
+    expect(eventDispatcher.dispatch).toHaveBeenCalledWith(expect.any(String), expect.any(Object));
   });
 
   it('deve retornar OrderNotFoundError quando a ordem não for encontrada', async () => {
@@ -64,19 +60,10 @@ describe('UpdateOrder', () => {
 
     const result = await updateOrderService.execute({
       orderId: 'sampleOrderId',
-      orderData: {
-        userId: 1,
-        note: 'Sample Note',
-        orderProducts: [],
-        payment: 'CREDITCARD',
-        status: 'INPROGRESS',
-        paid: true,
-        paidId: 101522,
-      },
+      orderData: {},
     });
 
     expect(result).toBeInstanceOf(OrderNotFoundError);
-
     expect(mockGetOrderByIdRepository.getOrderById).toHaveBeenCalledWith('sampleOrderId');
   });
 });

@@ -12,7 +12,7 @@ const setupDb = async () => {
       paid: true,
       paidId: 101522,
       note: 'note',
-      userId: 1,
+      userMail: 'johnDoe@mail.com',
     },
   });
   return order;
@@ -32,7 +32,8 @@ describe('[Repository] Order', () => {
       paid: true,
       paidId: 101522,
       note: 'note',
-      userId: 1,
+      userMail: 'johnDoe@mail.com',
+      userPhone: '1234567890',
     };
 
     await sut.createOrder(order);
@@ -53,7 +54,7 @@ describe('[Repository] Order', () => {
         paid: true,
         paidId: 101522,
         note: 'note',
-        userId: 1,
+        userMail: 'johnDoe@mail.com',
       },
     };
 
@@ -130,7 +131,7 @@ describe('[Repository] Order', () => {
         paid: true,
         paidId: 101522,
         note: 'note',
-        userId: 1,
+        userMail: 'johnDoe@mail.com',
       },
     };
     await expect(sut.updateOrder(updatedOrder)).rejects.toThrow(Error);

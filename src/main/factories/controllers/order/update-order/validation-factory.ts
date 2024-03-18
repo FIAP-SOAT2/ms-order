@@ -12,5 +12,5 @@ export const makeUpdateOrderValidation = (): ValidationComposite => {
   const stringValidator = new StringValidatorAdapter();
   const enumValidator = new EnumValidatorAdapter();
 
-  return new ValidationComposite([new NumberFieldValidation('userId', numberValidator), new EnumFieldValidation('status', enumValidator, StatusEnum), new EnumFieldValidation('payment', enumValidator, PaymentEnum), new StringFieldValidation('note', stringValidator)], 'body');
+  return new ValidationComposite([new NumberFieldValidation('userMail', numberValidator), new EnumFieldValidation('status', enumValidator, StatusEnum), new EnumFieldValidation('payment', enumValidator, PaymentEnum), new StringFieldValidation('note', stringValidator)], 'body');
 };

@@ -15,7 +15,8 @@ describe('GetOrders', () => {
   it('deve retornar a lista de pedidos paginada', async () => {
     const fakeOrder1 = {
       id: 'sampleOrderId',
-      userId: 1,
+      userMail: 'johnDoe@mail.com',
+      userPhone: '12301321',
       note: 'Sample Note',
       orderProducts: [],
       payment: 'CREDITCARD',
@@ -26,7 +27,8 @@ describe('GetOrders', () => {
 
     const fakeOrder2 = {
       id: 'sampleOrderId',
-      userId: 1,
+      userMail: 'johnDoe@mail.com',
+      userPhone: '12301321',
       note: 'Sample Note',
       orderProducts: [],
       payment: 'CREDITCARD',

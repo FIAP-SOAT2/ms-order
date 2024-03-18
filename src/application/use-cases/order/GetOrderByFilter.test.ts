@@ -19,7 +19,8 @@ describe('GetOrderByFilters', () => {
     const status = 'PENDING';
     const expectedOrder: OrderEntity = {
       id: 'sampleOrderId',
-      userId: 1,
+      userMail: 'johnDoe@mail.com',
+      userPhone: '12301321',
       note: 'Sample Note',
       orderProducts: [],
       payment: 'CREDITCARD',
